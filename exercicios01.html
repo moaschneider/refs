@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link href="https://db.onlinewebfonts.com/c/eeb2719d248b27841be5f4899986eedc?family=Sentinel-Book" rel="stylesheet">
+    <style>
+        body {
+            font-family: "Sentinel-book", sans-serif;
+        }
+        .container {
+            background-color: #dbdbdb;
+            padding: 30px;
+            border-radius: 20px;
+            margin: 0px 15px 15px 0px;
+            width: 300px;
+            float: left;
+        }
+
+        h1 {
+            font-family: "Sentinel-Book", sans-serif;
+            letter-spacing: -1px;
+            color: #e22424;
+        }
+
+        form {
+            min-height: 170px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .container input {
+            height: 28px;
+            width: 100px;
+            padding: 2px;
+            border-radius: 5px;
+        }
+        .container button {
+            height: 40px;
+            width: 40px;
+            border-radius: 5px;
+            font-size: 0.7em;
+        }
+        p {
+            margin: 2px 0;
+        }
+        
+    </style>
+</head>
+<body>
+    <h1>testes javascript</h1>
+
+    <div class="container calculos">
+        <form id="calculos">
+            <div>
+                <label for="num01">Num. 01</label>
+                <input type="number" id="num01">
+            </div>
+            <div>
+                <label for="num02">Num. 02</label>
+                <input type="number" id="num02">
+            </div>
+            <div>
+                <button type="submit" id="botao01" onclick="subtracao()">
+                    ➖
+                </button>
+                <button type="submit" id="botao02" onclick="soma()">
+                    ➕
+                </button>
+                <button type="submit" id="botao03" onclick="multiplicacao()">
+                    ✖
+                </button>
+                <button type="submit" id="botao04" onclick="divisao()">
+                    ➗
+                </button>
+            </div>
+            <div>
+                <label for="campo-resultado">Resultado</label>
+                <input type="text" id="campo-resultado">
+            </div>
+        </form>
+        <div id="historico-calculos" style="margin-top: 10px;"></div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.querySelector('#calculos').addEventListener('submit', function(e){
+        e.preventDefault();
+    });
+
+    function subtracao(){
+        const num01 = Number(document.getElementById('num01').value);
+        const num02 = Number(document.getElementById('num02').value);
+        realizarOperacao(num01, num02, '-');
+    }
+
+    function soma(){
+        const num01 = Number(document.getElementById('num01').value);
+        const num02 = Number(document.getElementById('num02').value);
+        realizarOperacao(num01, num02, '+');
+    }
+
+    function multiplicacao(){
+        const num01 = Number(document.getElementById('num01').value);
+        const num02 = Number(document.getElementById('num02').value);
+        realizarOperacao(num01, num02, '*');
+    }
+
+    function divisao(){
+        const num01 = Number(document.getElementById('num01').value);
+        const num02 = Number(document.getElementById('num02').value);
+        realizarOperacao(num01, num02, '/');
+    }
+
+    function realizarOperacao(num01, num02, operador) {
+        const resultado = document.getElementById('campo-resultado');
+        const historico = document.getElementById('historico-calculos');
+        let resultadoOperacao;
+
+        if (operador === '+') {
+            resultadoOperacao = num01 + num02;
+        } else if (operador === '-') {
+            resultadoOperacao = num01 - num02;
+        } else if (operador === '*') {
+            resultadoOperacao = num01 * num02;
+        } else if (operador === '/') {
+            resultadoOperacao = num01 / num02;
+        }
+
+        resultado.value = resultadoOperacao;
+        historico.innerHTML += `<p>${num01} ${operador} ${num02} = ${resultadoOperacao}</p>`;
+    }
+    </script>
+</body>
+</html>
