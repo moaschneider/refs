@@ -24,6 +24,19 @@
             font-size: 2    rem;
 
         }
+        .tomato {background-color: tomato;}
+        .wheat {background-color: wheat;}
+        .limegreen {background-color: limegreen;}
+        .darkorange {background-color: darkorange;}
+        .orangered {background-color: orangered;}
+        .crimson {background-color: crimson;}
+        button {
+            border: none;
+            border-radius: 5px;
+            padding: 20px;
+            font-size: 18px;
+            cursor: pointer;
+        }
         code {
             background-color: lemonchiffon;
             border-radius: 5px;
@@ -81,7 +94,14 @@
         <a href="https://colorable.jxnblk.com/" target="_blank">Colorable</a>
         <a href="https://erikasarti.com/html/tabela-cores/" target="_blank">Tabela de Cores HTML (hexadecimal e RGB) - Erika Sarti</a>
         <a href="https://flatuicolors.com/" target="_blank">Flat UI Colors 2</a>
-
+        <div class="cores">
+            <button onclick="copiarClasse(this)" class="tomato"></button>
+            <button onclick="copiarClasse(this)" class="wheat"></button>
+            <button onclick="copiarClasse(this)" class="limegreen"></button>
+            <button onclick="copiarClasse(this)" class="darkorange"></button>
+            <button onclick="copiarClasse(this)" class="orangered"></button>
+            <button onclick="copiarClasse(this)" class="crimson"></button>
+        </div>
 
         <h1>Git</h1>
         <a href="https://pt.stackoverflow.com/questions/111842/alterar-reposit%C3%B3rio-remoto-git" target="_blank">Alterar repositório remoto git</a>
@@ -148,5 +168,37 @@
 
         <h2 style="border: 5px solid black; border-radius: 20px; background-color: silver;">&#9617;&#9617;&#9618;&#9618;&#9619;&#9619;&#12336;&#12336;&#10087;&#10042;&#9731;&#10052;&#9730;&#9728;&#9760;&#9773;&#8226;</h2><br><br>
     </div>
+
+    <script>
+        function copiarClasse(elemento) {
+            // Obtém a lista de classes do elemento
+            var classes = elemento.classList;
+            
+            // Converte a lista de classes em uma string
+            var classeTexto = Array.from(classes).join(" ");
+            
+            // Cria uma área de transferência temporária
+            var areaDeTransferencia = document.createElement("textarea");
+            
+            // Define o valor da área de transferência como o nome da classe
+            areaDeTransferencia.value = classeTexto;
+            
+            // Adiciona a área de transferência ao corpo da página
+            document.body.appendChild(areaDeTransferencia);
+            
+            // Seleciona todo o texto na área de transferência
+            areaDeTransferencia.select();
+            
+            // Copia o texto para a área de transferência
+            document.execCommand("copy");
+            
+            // Remove a área de transferência temporária
+            document.body.removeChild(areaDeTransferencia);
+            
+            // Alerta que o nome da classe foi copiado
+            // alert("Nome da classe copiado: " + classeTexto);
+        }
+    </script>
+
 </body>
 </html>
