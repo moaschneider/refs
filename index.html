@@ -26,8 +26,9 @@
             font-size: 3rem;
 
         }
-        a, code{font-size: 1.4rem; line-height: 2.5rem;}
-        a {color: dimgray; text-decoration: none;}
+        p, a, code{font-size: 1.4rem; line-height: 2.5rem;}
+        p, a {color: dimgray; text-decoration: none;}
+        p {margin-bottom: 0;}
         a:visited {color: dimgray;}
         a:active {color: dimgray;}
         a:hover {color: black;}
@@ -57,8 +58,8 @@
         
         @media screen and (max-width: 450px) {
             h1 {font-size: 2rem;}
-        a, code{font-size: 1rem; line-height: 1.5rem;}
-        code {width: 100%;}
+            p, a, code{font-size: 1rem; line-height: 1.5rem;}
+            code {width: 100%;}
         }
     </style>
 
@@ -72,6 +73,12 @@
             <input type="text" id="whats" placeholder="">
             <button type="submit">Enviar</button>
         </form> -->
+
+        <h1>Media Query</h1>
+        <p>576 px for portrait phone</p>
+        <p>768 px for tablets</p>
+        <p>992 px for laptops</p>
+        <p>1200 px for large devices</p>
 
         <h1>CSS/HTML</h1>
         <a href="https://www.origamid.com/projetos/css-grid-layout-guia-completo/" target="_blank">CSS Grid Origamid</a>
