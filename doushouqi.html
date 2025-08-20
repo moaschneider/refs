@@ -9,8 +9,9 @@
             * { font-family: 'Space Grotesk', monospace; }
             :root { margin: 0; padding: 0; box-sizing: border-box; }
             h1, p { text-align: center; }
-            table { border-collapse: collapse; cursor: pointer;}
+            .tabuleiro { width: 95vw; aspect-ratio: 7 / 9; border-collapse: collapse; cursor: pointer;}
             td { background-color: palegreen; }
+            .tabuleiro td { font-size: 3vw; border: 1px solid black; text-align: center; vertical-align: middle; }
             .lago { background-color: aqua; }
             .armadilha { background-color: gold; }
             .toca { background-color: lightsalmon; }
@@ -36,7 +37,7 @@
         <h1>Dou Shou Qi</h1>
         <p>Regras • Jogar</p>
         
-        <table border='4' align='center'>
+        <table border='4' align='center' class="tabuleiro">
           <tr>
             <td id="A1" class="quadrante"></td>
             <td id="B1" class="quadrante"></td>
