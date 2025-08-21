@@ -4,40 +4,123 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap" >
+
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
         
+        <link rel="stylesheet" href="styles.css">
+
+        <title>Dou Shou Qi • Xadrez da Selva</title>
+
         <style>
-            * { font-family: 'Space Grotesk', monospace; }
-            :root { margin: 0; padding: 0; box-sizing: border-box; }
-            h1, p { text-align: center; }
-            .tabuleiro { width: 95vw; aspect-ratio: 7 / 9; border-collapse: collapse; cursor: pointer;}
-            td { background-color: palegreen; }
-            .tabuleiro td { font-size: 3vw; border: 1px solid black; text-align: center; vertical-align: middle; }
-            .lago { background-color: aqua; }
-            .armadilha { background-color: gold; }
-            .toca { background-color: lightsalmon; }
-            .vermelha { background-color: orangered; }
-            .azul { background-color: deepskyblue; }
-            .quadrante { width: 50px; height: 50px; }
+            * {
+                font-family: 'Space Grotesk', monospace;
+            }
+
+            :root {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-size: 1.2rem;
+
+                --largura: 95vw;
+            }
+
+            h1 {
+                margin: 20px 0 0 0;
+            }
+
+            p {
+                margin: 10px 0 20px 0;
+            }
+
+            h1,
+            p {
+                text-align: center;
+            }
+
+            table {
+                width: var(--largura);
+                min-width: 260px;
+                aspect-ratio: 7 / 9;
+                border-collapse: collapse;
+                border: none;
+                cursor: pointer;
+            }
+
+            td {
+                background-color: palegreen;
+                border-radius: 10px;
+            }
+
+            table td {
+                border: 2px solid white;
+                text-align: center;
+                vertical-align: middle;
+            }
+
+            .lago {
+                background-color: aqua;
+            }
+
+            .armadilha {
+                background-color: gold;
+            }
+
+            .toca {
+                background-color: lightsalmon;
+            }
+
+            .vermelha {
+                background-color: orangered;
+            }
+
+            .azul {
+                background-color: deepskyblue;
+            }
+
+            .quadrante {
+                width: 50px;
+                height: 50px;
+            }
+
             .peca {
-                width: 30px;
-                height: 30px;
+                width: 70%;
+                height: 70%;
                 margin: 0 auto;
                 border-radius: 50%;
-                border: 1px solid transparent;
                 display: flex;
                 font-weight: bold;
+                color: white;
                 align-items: center;
                 justify-content: center;
+            }
+
+            .possibilidade {
+                background-color: rgba(0, 255, 0, 0.2);
+            }
+
+            @media screen and (max-width: 390px) {
+                :root { font-size: 1rem; }
+                .quadrante { width: 30px; height: 30px; }
+            }
+
+            @media screen and (min-width: 576px) {
+                :root { --largura: 65vw; }
+                table { width: var(--largura); aspect-ratio: 7 / 9; }
+            }
+
+            @media screen and (min-width: 768px) {
+                :root { --largura: 50vw; }
             }
         </style>
         
     </head>
-    
+
     <body>
         <h1>Dou Shou Qi</h1>
         <p>Regras • Jogar</p>
         
-        <table border='4' align='center' class="tabuleiro">
+        <table border='0' align='center'>
           <tr>
             <td id="A1" class="quadrante"></td>
             <td id="B1" class="quadrante"></td>
@@ -125,7 +208,7 @@
             let clickCheck = 0;
             let clickDe = "XX";
             let clickPara = "YY";
-            
+
             const posicoesIniciais = {
                 "A1": { animal: "leao", codigo: "L", nivel: 7, cor: "vermelha" },
                 "B1": { animal: "", codigo: "", nivel: 0, cor: "" },
@@ -199,7 +282,7 @@
                 "F9": { animal: "", codigo: "", nivel: 0, cor: "" },
                 "G9": { animal: "leao", codigo: "L", nivel: 7, cor: "azul" },
             }
-            
+
             const renderizarTabuleiro = () => {
                 for (let posicao in posicoesIniciais) {
                     const info = posicoesIniciais[posicao];
@@ -208,7 +291,7 @@
                     quadranteInicial.innerHTML = info.codigo ? `<div class="peca ${info.cor}">${info.codigo}</div>` : "";
                 }
             };
-            
+
             renderizarTabuleiro();
 
             const checkQuadrante = document.querySelectorAll('.quadrante');
@@ -220,42 +303,64 @@
                 })
             }
 
-           
-
             const jogada = (casa) => {
-
-              
+                quadrantesPossiveis(casa);
                 
                 if (clickCheck === 0){
-                    
                     clickDe = casa;
+
                     if (posicoesIniciais[clickDe].animal === ""){
-                       console.log('clickDe:', clickDe, typeof clickDe);
-                       console.log('clickPara:', clickPara, typeof clickPara);
-                       console.log('posicoesIniciais[clickDe]:', posicoesIniciais[clickDe], typeof posicoesIniciais[clickDe]);
-                       clickDe = "XX";
-                       clickPara = "YY";
-                       clickCheck = 0;
-                       return;
-                   }
+                        clickCheck++;
+                        return;
+                    }
+                    // else if ()
                     clickCheck++;
                 }
                 else if (clickCheck === 1){
                     clickPara = casa;
-                    
+
                     if (clickDe === clickPara){
                         clickDe = "XX";
                         clickPara = "YY";
                         clickCheck = 0;
                         return;
                     }
-
+                    else if (posicoesIniciais[clickDe].animal === ""){
+                        clickDe = "XX";
+                        clickPara = "YY";
+                        clickCheck = 0;
+                        return;
+                    }
                     clickCheck--;
 
                     posicoesIniciais[clickPara] = posicoesIniciais[clickDe];
                     posicoesIniciais[clickDe] = {animal: '', codigo: '', nivel: 0, cor: ''};
                 }
                 renderizarTabuleiro();
+            };
+
+            const quadrantesPossiveis = (casa) => {
+                const coluna = casa[0];
+                const linha = parseInt(casa[1]);
+                const letras = ["A", "B", "C", "D", "E", "F", "G"];
+                const indiceLetra = letras.indexOf(coluna);
+                const possibilidades = [];
+
+                if (indiceLetra > 0) possibilidades.push(letras[indiceLetra - 1] + linha);
+                if (indiceLetra < letras.length - 1) possibilidades.push(letras[indiceLetra + 1] + linha);
+                if (linha > 1) possibilidades.push(coluna + (linha - 1));
+                if (linha < 9) possibilidades.push(coluna + (linha + 1));
+
+                console.log('possibilidades:', possibilidades, typeof possibilidades);
+
+              possibilidades.forEach((casa) => {
+                    const quadrante = document.getElementById(casa);
+                    if (quadrante) {
+                        quadrante.classList.add("possibilidade");
+                    }
+                });
+
+
             };
         </script>
     </body>
