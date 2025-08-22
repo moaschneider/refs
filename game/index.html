@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap" >
+
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+        
+        <link rel="stylesheet" href="styles.css">
+        <!-- <link rel="stylesheet" href="styles_teste.css"> -->
+
+        <title>Dou Shou Qi • Xadrez da Selva</title>
+        
+    </head>
+    
+    <body>
+        <h1>Dou Shou Qi</h1>
+        <p>Regras • Jogar</p>
+        
+        <table border='0' align='center'>
+          <tr>
+            <td id="A1" class=""></td>
+            <td id="B1" class=""></td>
+            <td id="C1" class="armadilha"></td>
+            <td id="D1" class="toca"></td>
+            <td id="E1" class="armadilha"></td>
+            <td id="F1" class=""></td>
+            <td id="G1" class=""></td>
+          </tr>
+          <tr>
+            <td id="A2" class=""></td>
+            <td id="B2" class=""></td>
+            <td id="C2" class=""></td>
+            <td id="D2" class="armadilha"></td>
+            <td id="E2" class=""></td>
+            <td id="F2" class=""></td>
+            <td id="G2" class=""></td>
+          </tr>
+          <tr>
+            <td id="A3" class=""></td>
+            <td id="B3" class=""></td>
+            <td id="C3" class=""></td>
+            <td id="D3" class=""></td>
+            <td id="E3" class=""></td>
+            <td id="F3" class=""></td>
+            <td id="G3" class=""></td>
+          </tr>
+          <tr>
+            <td id="A4" class=""></td>
+            <td id="B4" class="lago"></td>
+            <td id="C4" class="lago"></td>
+            <td id="D4" class=""></td>
+            <td id="E4" class="lago"></td>
+            <td id="F4" class="lago"></td>
+            <td id="G4" class=""></td>
+          </tr>
+          <tr>
+            <td id="A5" class=""></td>
+            <td id="B5" class="lago"></td>
+            <td id="C5" class="lago"></td>
+            <td id="D5" class=""></td>
+            <td id="E5" class="lago"></td>
+            <td id="F5" class="lago"></td>
+            <td id="G5" class=""></td>
+          </tr>
+          <tr>
+            <td id="A6" class=""></td>
+            <td id="B6" class="lago"></td>
+            <td id="C6" class="lago"></td>
+            <td id="D6" class=""></td>
+            <td id="E6" class="lago"></td>
+            <td id="F6" class="lago"></td>
+            <td id="G6" class=""></td>
+          </tr>
+          <tr>
+            <td id="A7" class=""></td>
+            <td id="B7" class=""></td>
+            <td id="C7" class=""></td>
+            <td id="D7" class=""></td>
+            <td id="E7" class=""></td>
+            <td id="F7" class=""></td>
+            <td id="G7" class=""></td>
+          </tr>
+          <tr>
+            <td id="A8" class=""></td>
+            <td id="B8" class=""></td>
+            <td id="C8" class=""></td>
+            <td id="D8" class="armadilha"></td>
+            <td id="E8" class=""></td>
+            <td id="F8" class=""></td>
+            <td id="G8" class=""></td>
+          </tr>
+          <tr>
+            <td id="A9" class=""></td>
+            <td id="B9" class=""></td>
+            <td id="C9" class="armadilha"></td>
+            <td id="D9" class="toca"></td>
+            <td id="E9" class="armadilha"></td>
+            <td id="F9" class=""></td>
+            <td id="G9" class=""></td>
+          </tr>
+        </table>
+
+        <!-- <script>
+          const checkQuadrantes = document.querySelectorAll('.quadrante');
+          // console.log('checkQuadrantes:', checkQuadrantes, typeof checkQuadrantes);
+
+          for (let i = 0; i < checkQuadrantes.length; i++){
+            checkQuadrantes[i].addEventListener('click', () => {
+              const quadranteClicado = checkQuadrantes[i];
+              console.log('quadranteClicado:', quadranteClicado, typeof quadranteClicado);
+              const temPecaNoQuadrante = checkQuadrantes[i].className.split(" ").includes("peca");
+              if (temPecaNoQuadrante){
+                quadranteClicado.textContent = "L";
+              }
+            });
+          }
+
+
+        </script> -->
+        
+        <script src="script.js"></script>
+    </body>
+</html>
