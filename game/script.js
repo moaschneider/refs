@@ -17,15 +17,26 @@ const animais = [
     { especie: "elefante", codigo: "EL", nivel: 8, cor: "azul", posicao: "A7" },
 ];
 
-const renderizarTabuleiro = () => {
-    animais.forEach(animal => {
-        const quadrante = document.getElementById(animal.posicao);
-        quadrante.textContent = animal.codigo;
-        quadrante.classList.add(animal.especie);
-        quadrante.classList.add(animal.cor);
-    });
-    
-};
+const ESPECIES = ["rato","gato","cachorro","lobo","onça","tigre","leão","elefante"];
+const CORES = ["vermelho","azul"];
+const CELULAS = document.querySelectorAll('td');
+
+function limparTabuleiro() {
+  CELULAS.forEach(td => {
+    td.textContent = "";
+    td.classList.remove(...ESPECIES, ...CORES, "possibilidade");
+  });
+}
+
+function renderizarTabuleiro() {
+  limparTabuleiro();
+  animais.forEach(animal => {
+    // if (!animal.posicao) return;
+    const td = document.getElementById(animal.posicao);
+    td.textContent = animal.codigo;
+    td.classList.add(animal.especie, animal.cor);
+  });
+}
 
 renderizarTabuleiro();
 
@@ -38,98 +49,204 @@ for (let i = 0; i < checkQuadrante.length; i++){
     })
 }
 
-const apagarQuadrantesPossiveis = () => {
+const removeQuadrantesPossiveis = () => {
     checkQuadrante.forEach((n) => {
         n.classList.remove('possibilidade');
     });
 };
 
 let clickCheck = 0;
-let clickDe = "XX";
-let clickPara = "YY";
-let temp = "";
-let corAnimalDe = "";
-let corAnimalPara = "";
-let time1 = {};
-let time2 = {};
-let indiceTime1 = "";
-let indiceTime2 = "";
+let casaOrigem = "";
+let casaDestino = "";
+let origem = {};
+let destino = {};
+let indiceOrigem = "";
+let indiceDestino = "";
 let casasPossiveis = [];
+let turno = "vermelho";
+// console.log('turno:', turno, typeof turno);
+
+function trocaTurno(){ 
+    turno = (turno === "azul") ? "vermelho" : "azul";
+    // console.log('turno:', turno, typeof turno);
+};
 
 const jogada = (casa) => {
-    apagarQuadrantesPossiveis();
-    
-    const animalNaCasa = animais.find(animal => animal.posicao === casa);
-    const estaOcupada = animalNaCasa === undefined ? false : true;
-    const indiceNoArray = animais.indexOf(animalNaCasa); 
-    
+
     if (clickCheck === 0){
+        
+        const estaOcupada = animais.find(animal => animal.posicao === casa) === undefined ? false : true;
+        // console.log('estaOcupada:', estaOcupada, typeof estaOcupada);
         
         if (!estaOcupada) return;
         
-        clickDe = document.getElementById(casa);
-        time1 = estaOcupada ? {...animalNaCasa} : "";
-        indiceTime1 = indiceNoArray;
-
-        casasPossiveis = quadrantesPossiveis(casa);
-        quadrantesPossiveis(casa);
-        clickCheck++;
-        return;
+        const timeDaVez = (animais.find(animal => animal.posicao === casa)).cor === turno ? true : false;
+        // console.log('timeDaVez:', timeDaVez, typeof timeDaVez);
+        
+        if (timeDaVez){
+            indiceOrigem = animais.indexOf(animais.find(animal => animal.posicao === casa));
+            // console.log('indiceOrigem:', indiceOrigem, typeof indiceOrigem);
+            origem = animais.find(animal => animal.posicao === casa);
+            // console.log('origem:', origem, typeof origem);
+            casaOrigem = document.getElementById(casa);
+            // console.log('casaOrigem:', casaOrigem, typeof casaOrigem);
+            casasPossiveis = quadrantesPossiveis(casa);
+            // quadrantesPossiveis(casa);
+            clickCheck = 1;
+            return;
+        }
     }
     
     if (clickCheck === 1){
-
-        if (!casasPossiveis.includes(casa)){
-            clickCheck = 0;
-            time1 = {};
-            return;
-        }
-
-        time2 = estaOcupada ? {...animalNaCasa} : "";
-        quadrantesPossiveis(casa);
         
-        if (time1.cor === time2.cor){ 
-            clickDe = document.getElementById(casa);
-            time1 = time2;
-            time2 = {};
-            indiceTime1 = indiceNoArray;
+        const jogadaPossivel = casasPossiveis.includes(casa) ? true : false;
+        // console.log('jogadaPossivel:', jogadaPossivel, typeof jogadaPossivel);
+        
+        if (!jogadaPossivel) {
+            removeQuadrantesPossiveis();
+            origem = animais.find(animal => animal.posicao === casa);
+            // console.log('origem:', origem, typeof origem);
+            casaOrigem = document.getElementById(casa);
+            indiceOrigem = animais.indexOf(animais.find(animal => animal.posicao === casa));
+            // console.log('indiceOrigem:', indiceOrigem, typeof indiceOrigem);
             casasPossiveis = quadrantesPossiveis(casa);
             clickCheck = 1;
             return;
         }
         
-        apagarQuadrantesPossiveis();
-        clickCheck--;
         
-        clickDe.classList.remove(time1.especie, time1.cor);
-        clickDe.textContent = "";
-
-        time1.posicao = casa;
-        animais[indiceTime1] = time1;
-
+        
+        casaOrigem.classList.remove(origem.especie, origem.cor);
+        casaOrigem.textContent = "";
+        
+        destino = animais.find(animal => animal.posicao === casa);
+        
+        if (destino && destino.cor !== origem.cor) {
+            indiceDestino = animais.indexOf(destino);
+            animais.splice(indiceDestino, 1);
+        }
+        
+        origem.posicao = casa;
+        removeQuadrantesPossiveis();
+        clickCheck = 0;
         casasPossiveis = [];
+        origem = {};
+        destino = {};
+        renderizarTabuleiro();
+        trocaTurno();
+        
+        // animais[indiceOrigem] = origem;
+        
+        // casaDestino.classList.add(origem.especie, origem.cor);
+        // casaDestino.textContent = origem.simbolo;
+
+        // console.log('origem:', origem, typeof origem);
+        // console.log('destino:', destino, typeof destino);
+        // console.log('casaDestino:', casaDestino, typeof casaDestino);
+        
+        
+        // indiceOrigem = "";
+        // indiceDestino = "";
+        // casaOrigem = "";
+        // casaDestino = "";
+
     }
-    renderizarTabuleiro();
 };
 
 const quadrantesPossiveis = (casa) => {
     const coluna = casa[0];
+    // console.log('coluna:', coluna, typeof coluna);
     const linha = parseInt(casa[1]);
+    // console.log('linha:', linha, typeof linha);
+    const indiceLetra = coluna.charCodeAt(0) - 65;
+    // console.log('indiceLetra:', indiceLetra, typeof indiceLetra);
     const letras = ["A", "B", "C", "D", "E", "F", "G"];
-    const indiceLetra = letras.indexOf(coluna);
-    const possibilidades = [];
+
+    let possibilidades = [];
+    let possibilidadesFiltro = [];
+
 
     if (indiceLetra > 0) possibilidades.push(letras[indiceLetra - 1] + linha);
     if (indiceLetra < letras.length - 1) possibilidades.push(letras[indiceLetra + 1] + linha);
-    if (linha > 1) possibilidades.push(coluna + (linha - 1));
     if (linha < 9) possibilidades.push(coluna + (linha + 1));
+    if (linha > 1) possibilidades.push(coluna + (linha - 1));
+    
+    const toca = turno === "azul" ? "D9" : "D1";
+    // console.log('toca:', toca, type0of toca);
+    possibilidadesFiltro = possibilidades.filter(item => item !== toca);
+    possibilidades = possibilidadesFiltro;
+    possibilidadesFiltro = [];
+    // console.log('possibilidades:', possibilidades, typeof possibilidades);
+    
+    let aliados = [];
+    let inimigos = [];
+    
+    possibilidades.forEach((n) => {
+        // console.log('n:', n, typeof n);
+        const jogadorProximo = animais.find(item => item.posicao === n);
+        // console.log('jogadorProximo:', jogadorProximo, typeof jogadorProximo);
+        
+        if (jogadorProximo !== undefined && jogadorProximo.cor === turno){
+            aliados.push(jogadorProximo.posicao);
+        } else if (jogadorProximo !== undefined && jogadorProximo.cor !== turno) {
+            inimigos.push(jogadorProximo.posicao);
+        }
+    });
+    // console.log('aliados:', aliados, typeof aliados);
+    // console.log('inimigos:', inimigos, typeof inimigos);
+    
+    possibilidadesFiltro = possibilidades.filter(item => !aliados.includes(item));
+    possibilidades = possibilidadesFiltro;
+    possibilidadesFiltro = [];
+    // console.log('possibilidades:', possibilidades, typeof possibilidades);
+    
+    const animalSelecionado = animais.find(animal => animal.posicao === casa);
+    // console.log('nivelAnimalSelecionado:', nivelAnimalSelecionado, typeof nivelAnimalSelecionado);
 
-   possibilidades.forEach((casa) => {
+    let inimigosNaoDerrotaveis = [];
+
+    possibilidades.forEach((n) => {
+        const inimigoProximo = animais.find(animal => animal.posicao === n);
+        // console.log('inimigoProximo:', inimigoProximo, typeof inimigoProximo);
+
+        if (inimigoProximo !== undefined &&
+            inimigoProximo.nivel > animalSelecionado.nivel && 
+            animalSelecionado.especie !== "elefante" &&
+            animalSelecionado.especie !== "rato"){
+            // console.log(inimigoProximo.especie);
+            inimigosNaoDerrotaveis.push(inimigoProximo.posicao);
+            
+        } else if (inimigoProximo !== undefined &&
+            animalSelecionado.especie === "elefante" &&
+            inimigoProximo.especie === "rato"){
+            console.log(inimigoProximo.especie);
+            inimigosNaoDerrotaveis.push(inimigoProximo.posicao);
+                
+        } else if (inimigoProximo !== undefined &&
+            inimigoProximo.nivel > animalSelecionado.nivel &&
+            animalSelecionado.especie === "rato" &&
+            inimigoProximo.especie !== "elefante"){
+            // console.log(inimigoProximo.especie);
+            inimigosNaoDerrotaveis.push(inimigoProximo.posicao);
+        }
+
+    });
+
+    possibilidadesFiltro = possibilidades.filter(item => !inimigosNaoDerrotaveis.includes(item));
+    possibilidades = possibilidadesFiltro;
+    possibilidadesFiltro = [];
+    // console.log('possibilidadesFiltro:', possibilidadesFiltro, typeof possibilidadesFiltro);
+    // console.log('inimigosNaoDerrotaveis:', inimigosNaoDerrotaveis, typeof inimigosNaoDerrotaveis);
+    // console.log('possibilidades:', possibilidades, typeof possibilidades);
+    
+    possibilidades.forEach((casa) => {
         const quadrante = document.getElementById(casa);
         if (quadrante) {
             quadrante.classList.add("possibilidade");
         }
     });
+    // trocaTurno();
+    // console.log('turno:', turno, typeof turno);
     return possibilidades;
 };
 
